@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import Navbar from "../components/Navbar";
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -50,6 +51,8 @@ const SignupPage = () => {
   };
 
   return (
+    <div>
+      <Navbar />
     <div className="min-h-screen grid lg:grid-cols-2">
       {/* Left Side Image */}
       <div className="flex flex-col items-center justify-center p-6 sm:p-12">
@@ -175,6 +178,7 @@ const SignupPage = () => {
       <AuthImagePattern 
       title = "Join Our Community"
       subtitle = "Discover and connect with like-minded individuals"/>
+    </div>
     </div>
   );
 };
