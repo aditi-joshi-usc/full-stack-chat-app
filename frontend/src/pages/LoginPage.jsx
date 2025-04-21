@@ -32,7 +32,7 @@ const LoginPage = () => {
 
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
     <div className="min-h-screen grid lg:grid-cols-2">
       {/* Left Side Image */}
       <div className="flex flex-col items-center justify-center p-6 sm:p-12">

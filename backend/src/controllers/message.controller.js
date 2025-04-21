@@ -1,19 +1,29 @@
+import User from "../models/user.model.js";
+import Message from "../models/message.model.js";
+import cloudinary from "../lib/cloudinary.js";
+
 export const getUsersForSidebar = async (req, res) => {
-    try {  
-        const loggedInUserId = req.user._id;
-
-        console.log("Logged in user ID:", loggedInUserId);
-
-        const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select('-password');
-
-        res.status(200).json(filteredUsers);
-
+    try {
+      if (!req.user || !req.user._id) {
+        console.error("User not authenticated");
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+  
+      const loggedInUserId = req.user._id;
+      console.log("Logged in user ID:", loggedInUserId);
+  
+      const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password");
+      console.log("Filtered users:", filteredUsers);
+  
+      return res.status(200).json(filteredUsers);
+      
     } catch (error) {
-        console.error("Error in getUsersForSidebar controller", error);
-        res.status(500).json({ message: 'Internal server error' });
+      console.error("Error in getUsersForSidebar:", error.message);
+      return res.status(500).json({ error: "Internal server error" });
     }
-};
-
+  };
+  
+  
 export const getMessages = async (req, res) => {
     try {
         const { id } = req.params;
@@ -24,11 +34,11 @@ export const getMessages = async (req, res) => {
 
         const messages = await Message.find({
             $or: [
-                { sender: loggedInUserId, receiver: id },
-                { sender: id, receiver: loggedInUserId }
+                { senderId: loggedInUserId, receiverId: id },
+                { senderId: id, receiverId: loggedInUserId }
             ]
         })
-
+        console.log("Messages:", messages);
         res.status(200).json(messages);
 
     } catch (error) {

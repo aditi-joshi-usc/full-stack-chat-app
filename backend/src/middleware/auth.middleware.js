@@ -25,7 +25,7 @@ export const protectRoute = async (req, res, next) => {
         
         
         req.user = user; // Attach the user to the request object for later use
-        res.status(200).json(user);
+        //res.status(200).json(user);
         next(); // Call the next middleware or route handler
     } catch (error) {
         console.error("Error in protectRoute middleware", error);

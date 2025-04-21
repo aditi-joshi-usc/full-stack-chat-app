@@ -10,6 +10,8 @@ import cookieParser from 'cookie-parser';
 dotenv.config();
 
 const app = express();
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 const PORT = process.env.PORT || 5001;
 
@@ -21,7 +23,7 @@ app.use(cors({
     credentials: true,
 }));
 app.use("/api/auth", authRoutes);
-app.use("/api/message", messageRoutes);
+app.use("/api/messages", messageRoutes);
 
 
 app.listen(5001, () => {
